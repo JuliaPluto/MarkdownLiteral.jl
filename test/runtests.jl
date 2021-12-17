@@ -2,18 +2,11 @@ using MarkdownLiteral
 using Test
 
 import HypertextLiteral
-
-@test try
-    var"@md"
-    false
-catch e
-    e isa UndefVarError
-end
-
-
 import MarkdownLiteral: @md
 
 @testset "Not much" begin
+    @test Symbol("@md") ∉ names(MarkdownLiteral)
+    @test Symbol("@htl") ∈ names(HypertextLiteral)
 
     code_snippet = """
     xs = [1:10..., 20]
