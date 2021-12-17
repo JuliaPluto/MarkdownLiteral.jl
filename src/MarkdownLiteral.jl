@@ -4,9 +4,9 @@ import HypertextLiteral, CommonMark
 
 macro md(expr)
     cm_parser = CommonMark.Parser()
-    enable!(cm_parser, MathRule())
+    CommonMark.enable!(cm_parser, CommonMark.MathRule())
     quote
-        result = HypertextLiteral.@htl($expr)
+        result = $(esc(Expr(:macrocall, HypertextLiteral.var"@htl", __source__, expr)))
         htl_output = repr(MIME"text/html"(), result)
 
         $(cm_parser)(htl_output)
