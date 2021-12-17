@@ -1,7 +1,33 @@
 # MarkdownLiteral.jl *(beta release)*
-HypertextLiteral.jl + CommonMark.jl = 🤯
 
-A combination of [HypertextLiteral.jl](https://github.com/MechanicalRabbit/HypertextLiteral.jl) by @clarkevans and CommonMark.jl, and I think it is really cool!!
+The macro `@markdown` lets you write [Markdown](https://www.markdownguide.org/getting-started/) inside Pluto notebooks. *Here is an example:*
+
+```julia
+@markdown("""
+# MarkdownLiteral.jl
+
+The macro `@markdown` lets you write [Markdown](https://www.markdownguide.org/getting-started/) inside Pluto notebooks. *Here is an example:*
+""")
+```
+
+The macro `@markdown` lets you write [HTML](https://developer.mozilla.org/docs/Web/HTML) inside Pluto notebooks. *Here is an example:*
+
+```julia
+@markdown("""
+<p>
+	The macro <code>@markdown</code> lets you write <a href="https://developer.mozilla.org/docs/Web/HTML">HTML</a> inside Pluto notebooks.
+	<em>Here is an example:</em>
+</p>
+""")
+```
+
+Did you see that? **It is the same macro!** But that's not all!
+
+---
+
+## HypertextLiteral.jl + CommonMark.jl = 🤯
+
+This package is a combination of [HypertextLiteral.jl](https://github.com/MechanicalRabbit/HypertextLiteral.jl) by @clarkevans and CommonMark.jl, and I think it is really cool!!
 
 > ### [DEMO NOTEBOOK](https://htmlview.glitch.me/?https://gist.github.com/fonsp/29015dc6fd9438cd164a51fe3bef117d)
 
