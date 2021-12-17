@@ -16,7 +16,7 @@ A combination of [HypertextLiteral.jl](https://github.com/MechanicalRabbit/Hyper
 # Features
 The list of features is really simple to explain: it is everything that CommonMark gives, plus everything that HypertextLiteral gives! This includes:
 - CommonMark! Markdown but less glitchy!
-- Really flexible interpolation support with infinite nesting and syntax highlighting (since it is a `@md("""` macro instead of `md"""`)
+- Really flexible interpolation support with infinite nesting and syntax highlighting (since it is a `@markdown("""` macro instead of `md"""`)
 - Interpolate Julia objects into `<script>` to automatically convert to JS literals
 - Context-aware HTML escaping
 - Automatic quote wrapping for HTML attributes

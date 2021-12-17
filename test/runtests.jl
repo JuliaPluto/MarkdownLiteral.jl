@@ -2,10 +2,10 @@ using MarkdownLiteral
 using Test
 
 import HypertextLiteral
-import MarkdownLiteral: @md
+import MarkdownLiteral: @markdown
 
 @testset "Not much" begin
-    @test Symbol("@md") ∉ names(MarkdownLiteral)
+    @test Symbol("@markdown") ∉ names(MarkdownLiteral)
     @test Symbol("@htl") ∈ names(HypertextLiteral)
 
     code_snippet = """
@@ -34,7 +34,7 @@ import MarkdownLiteral: @md
     """)
 
 
-    result = @md("""
+    result = @markdown("""
     # Hello!
     This is *Markdown* but **supercharged**!!
     <marquee style=$((color="purple", font_family="cursive"))>Inline HTML supported!</marquee>
