@@ -1,4 +1,4 @@
-# MarkdownLiteral.jl *(beta release)*
+# MarkdownLiteral.jl *(alpha release)*
 
 The macro `@markdown` lets you write [Markdown](https://www.markdownguide.org/getting-started/) inside Pluto notebooks. *Here is an example:*
 
