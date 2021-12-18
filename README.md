@@ -9,6 +9,7 @@ The macro `@markdown` lets you write [Markdown](https://www.markdownguide.org/ge
 The macro `@markdown` lets you write [Markdown](https://www.markdownguide.org/getting-started/) inside Pluto notebooks. *Here is an example:*
 """)
 ```
+> The Markdown parsing is powered by [CommonMark.jl](https://github.com/MichaelHatherly/CommonMark.jl), a Julia implementation of the [CommonMark](https://commonmark.org/) specification. Compared to Julia's [built-in Markdown parsing](https://docs.julialang.org/en/v1/stdlib/Markdown/), this system is more *predicatable* and *powerful*.
 
 The macro `@markdown` lets you write [HTML](https://developer.mozilla.org/docs/Web/HTML) inside Pluto notebooks. *Here is an example:*
 
@@ -21,13 +22,87 @@ The macro `@markdown` lets you write [HTML](https://developer.mozilla.org/docs/W
 """)
 ```
 
+> HTML parsing and interpolation is powered by [HypertextLiteral.jl](https://github.com/MechanicalRabbit/HypertextLiteral.jl), an interpolation system that understands HTML, CSS and even JavaScript!
+
 Did you see that? **It is the same macro!** But that's not all!
 
----
+## Interpolation
 
-## HypertextLiteral.jl + CommonMark.jl = 🤯
+You can unlock superpowers by combining `@markdown` with **interpolation** (using `$`). For our example, let's create some data:
 
-This package is a combination of [HypertextLiteral.jl](https://github.com/MechanicalRabbit/HypertextLiteral.jl) by @clarkevans and CommonMark.jl, and I think it is really cool!!
+```julia
+films = [
+	(title="Frances Ha", director="Noah Baumbach", year=2012)
+	(title="Portrait de la jeune fille en feu", director="Céline Sciamma", year=2019)
+	(title="De noorderlingen", director="Alex van Warmerdam", year=1992)
+]
+```
+Now, we can use *interpolation* to display our data:
+```julia
+@markdown("""
+My films:
+$([
+	"- **$(f.title)** ($(f.year)) by _$(f.director)_\n"
+	for f in films
+])
+""")
+```
+
+This gives us:
+
+> My films:
+> - **Frances Ha** (2012) by _Noah Baumbach_
+> - **Portrait de la jeune fille en feu** (2019) by _Céline Sciamma_
+> - **De noorderlingen** (1992) by _Alex van Warmerdam_
+
+Alternatively, you could write this using HTML instead of Markdown (*with the same macro!*):
+
+```julia
+@markdown("""
+<p>My films:</p>
+<ul>
+$([
+	@markdown("<li>
+		<b>$(f.title)</b> ($(f.year)) by <em>$(f.director)</em>
+	</li>")
+	for f in films
+])
+</ul>
+""")
+```
+
+## Advanced interpolation
+
+Because interpolation is powered by [HypertextLiteral.jl](https://github.com/MechanicalRabbit/HypertextLiteral.jl), you can use advanced features:
+- Interpolated attributes are automatically escaped
+- You can use a `NamedTuple` or `Dict` for the CSS `style` attribute
+- Interpolating Julia objects into a `<script>` will automatically convert to JavaScript code(!)
+
+For
+```julia
+logs = [
+	(text="Info", urgent=false),
+	(text="Alert", urgent=true),
+	(text="Update", urgent=false),
+]
+```
+
+```julia
+@markdown("$((
+	@markdown("<div style=$((
+        font_weight=900,
+		padding=".5em",
+		background=log.urgent ? "pink" : "lightblue",
+	))>$(log.text)</div>")
+	for log in logs
+))")
+```
+Result:
+
+![](https://user-images.githubusercontent.com/6933510/146623300-316e5a17-2daf-43ed-b70c-6c33278faf32.png)
+
+
+# Old README
 
 > ### [DEMO NOTEBOOK](https://htmlview.glitch.me/?https://gist.github.com/fonsp/29015dc6fd9438cd164a51fe3bef117d)
 
