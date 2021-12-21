@@ -25,7 +25,7 @@ You can also use the macro to write HTML!
 
 ## Interpolation
 
-You can unlock superpowers by combining `@markdown` with **interpolation** (using `$`). For our example, let's create some data:
+You can unlock superpowers by combining `@markdown` with **interpolation** (using `\$`). For our example, let's create some data:
 
 ```julia
 films = [
