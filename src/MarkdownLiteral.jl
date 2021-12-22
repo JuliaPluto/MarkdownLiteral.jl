@@ -121,7 +121,7 @@ end
 
 # Some aliases, it's up to you which one to import.
 
-var"@markdownliteral" = var"@markdown"
-var"@mdx" = var"@markdown"
+const var"@markdownliteral" = var"@markdown"
+const var"@mdx" = var"@markdown"
 
 end
