@@ -86,7 +86,7 @@ end
 
     struct Thing end
 
-    function Base.show(io::IO, m::MIME"text/html", t::Thing)
+    function Base.show(io::IO, ::MIME"text/html", ::Thing)
         write(io, get(io, :hello, "asdf"))
     end
 
