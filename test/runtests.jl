@@ -81,3 +81,27 @@ import MarkdownLiteral: @markdown
     @test htmle isa String
     @test occursin("Hello", htmle)
 end
+
+@testset "IO Context" begin
+
+    struct Thing end
+
+    function Base.show(io::IO, m::MIME"text/html", t::Thing)
+        write(io, get(io, :hello, "asdf"))
+    end
+
+    h = @markdown("""
+    Hello $(Thing())
+    """)
+
+    s1 = repr(MIME"text/html"(), h)
+    @test s1 isa String
+    @test occursin("Hello", s1)
+    @test occursin("asdf", s1)
+
+    s2 = sprint() do io
+        show(IOContext(io, :hello => "world"), MIME"text/html"(), h)
+    end
+    @test s2 isa String
+    @test occursin("world", s2)
+end
