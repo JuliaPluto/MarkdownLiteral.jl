@@ -113,10 +113,22 @@ macro markdown(expr)
     ])
     quote
         result = $(esc(Expr(:macrocall, getfield(HypertextLiteral, Symbol("@htl")), __source__, expr)))
-        htl_output = repr(MIME"text/html"(), result)
-
-        $(cm_parser)(htl_output)
+        CMParsedRenderer(contents = result, parser = $cm_parser)
     end
+end
+
+Base.@kwdef struct CMParsedRenderer
+    contents::Any
+    parser::CommonMark.Parser
+end
+
+function Base.show(io::IO, m::MIME"text/html", p::CMParsedRenderer)
+    # Use the given IO as context, render to HTML
+    html_render = sprint(show, m, p.contents; context = io)
+    # Parse the result
+    cm_parsed = p.parser(html_render)
+    # And render to HTML again
+    show(io, m, cm_parsed)
 end
 
 # Some aliases, it's up to you which one to import.
