@@ -99,6 +99,22 @@ Result:
 ![](https://user-images.githubusercontent.com/6933510/146623300-316e5a17-2daf-43ed-b70c-6c33278faf32.png)
 """
 macro markdown(expr)
+    cm_parser = _make_cm_parser()
+        quote
+        result = $(esc(Expr(:macrocall, getfield(HypertextLiteral, Symbol("@htl")), __source__, expr)))
+        CMParsedRenderer(contents = result, parser = $cm_parser)
+    end
+end
+
+macro mdx_str(expr::String)
+    cm_parser = _make_cm_parser()
+    quote
+        result = $(esc(Expr(:macrocall, getfield(HypertextLiteral, Symbol("@htl_str")), __source__, expr)))
+        CMParsedRenderer(contents = result, parser = $cm_parser)
+    end
+end
+
+function _make_cm_parser()
     cm_parser = CommonMark.Parser()
     CommonMark.enable!(cm_parser, [
         CommonMark.AdmonitionRule(),
@@ -111,10 +127,7 @@ macro markdown(expr)
         CommonMark.TableRule(),
         CommonMark.TypographyRule(),
     ])
-    quote
-        result = $(esc(Expr(:macrocall, getfield(HypertextLiteral, Symbol("@htl")), __source__, expr)))
-        CMParsedRenderer(contents = result, parser = $cm_parser)
-    end
+    return cm_parser
 end
 
 Base.@kwdef struct CMParsedRenderer
