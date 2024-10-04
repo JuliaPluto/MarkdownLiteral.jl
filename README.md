@@ -3,6 +3,10 @@
 The macro `@markdown` lets you write [Markdown](https://www.markdownguide.org/getting-started/) inside Pluto notebooks. *Here is an example:*
 
 ```julia
+import MarkdownLiteral: @markdown
+```
+
+```julia
 @markdown("""
 # MarkdownLiteral.jl
 
