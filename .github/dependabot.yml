@@ -11,3 +11,7 @@ updates:
           - '/'
       schedule:
           interval: 'weekly'
+      groups:
+          all-julia-packages:
+              patterns:
+                  - '*'
